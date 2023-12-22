@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: otel-collector
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: autopilot-cluster-1
+        url: https://connectgateway.googleapis.com/v1beta1/projects/92935634485/locations/global/gkeMemberships/autopilot-cluster-1
+      - cluster: autopilot-cluster-2
+        url: https://connectgateway.googleapis.com/v1beta1/projects/92935634485/locations/global/gkeMemberships/autopilot-cluster-1
+  template:
+    metadata:
+      name: '{{cluster}}-otel-collector'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/makocchan0509/sample-argocd.git
+        targetRevision: HEAD
+        path: otel-collector
+      destination:
+        server: '{{url}}'
+        namespace: default

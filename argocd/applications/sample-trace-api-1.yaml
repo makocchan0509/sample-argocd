@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: sample-trace-api
+  name: sample-trace-api-1
 spec:
   generators:
   - list:
@@ -12,11 +12,11 @@ spec:
         url: https://connectgateway.googleapis.com/v1beta1/projects/92935634485/locations/global/gkeMemberships/autopilot-cluster-1
   template:
     metadata:
-      name: '{{cluster}}-sample-trace-api'
+      name: '{{cluster}}-sample-trace-api-1'
     spec:
       project: default
       source:
-        repoURL: https://github.com/infra-team/cluster-deployments.git
+        repoURL: https://github.com/makocchan0509/sample-argocd.git
         targetRevision: HEAD
         path: sample-app-1
       destination:
