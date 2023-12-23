@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: sample-go-trace-api-1
-  name: sample-go-trace-api-{{.Values.app.name-suffix}}
+  name: sample-go-trace-api-1
 spec:
   replicas: 1
   selector:
@@ -40,7 +40,7 @@ kind: Service
 metadata:
   labels:
     app: sample-go-trace-api-1
-  name: sample-go-trace-api-{{.Values.app.name-suffix}}
+  name: sample-go-trace-api-1
 spec:
   ports:
     - port: 8080

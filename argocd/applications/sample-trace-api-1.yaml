@@ -9,10 +9,8 @@ spec:
       elements:
       - cluster: autopilot-cluster-1
         url: https://connectgateway.googleapis.com/v1beta1/projects/92935634485/locations/global/gkeMemberships/autopilot-cluster-1
-        valueFile: environments/tokyo/values.yaml
       - cluster: autopilot-cluster-2
         url: https://connectgateway.googleapis.com/v1beta1/projects/92935634485/locations/global/gkeMemberships/autopilot-cluster-2
-        valueFile: environments/osaka/values.yaml
   template:
     metadata:
       name: '{{cluster}}-sample-trace-api-1'
@@ -21,11 +19,7 @@ spec:
       source:
         repoURL: https://github.com/makocchan0509/sample-argocd.git
         targetRevision: HEAD
-        chart: sample-app-1
-        helm:
-          releaseName: sample-app-1
-          valueFiles:
-          - '{{valueFile}}'
+        path: sample-app-1
       destination:
         server: '{{url}}'
         namespace: default
