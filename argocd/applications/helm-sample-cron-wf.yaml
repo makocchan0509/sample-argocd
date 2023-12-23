@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: helm-sample-cron-job
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: autopilot-cluster-1
+        url: https://connectgateway.googleapis.com/v1beta1/projects/92935634485/locations/global/gkeMemberships/autopilot-cluster-1
+        valueFile: environments/tokyo/values.yaml
+      - cluster: autopilot-cluster-2
+        url: https://connectgateway.googleapis.com/v1beta1/projects/92935634485/locations/global/gkeMemberships/autopilot-cluster-2
+        valueFile: environments/osaka/values.yaml
+  template:
+    metadata:
+      name: '{{cluster}}-helm-sample-cron-job'
+    spec:
+      project: default
+      source:
+        repoURL: https://makocchan0509.github.io/helm-repo/stable
+        targetRevision: 0.1.0
+        chart: sample-cron-wf
+        helm:
+          releaseName: sample-cron-wf
+          valueFiles:
+          - '{{valueFile}}'
+      destination:
+        server: '{{url}}'
+        namespace: argo
