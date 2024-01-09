@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: sample-event-wf
+  namespace: argo
+spec:
+  entrypoint: workflow
+  onExit: exit-handler
+  serviceAccountName: argo-executor
+  templates:
+    - name: job
+      inputs:
+        parameters:
+        -  name: flg
+      container:
+        image: asia-northeast1-docker.pkg.dev/ca-masem-test/any-container/sample-job-app:v0.0.2
+        args: ["{{inputs.parameters.flg}}"]
+        env:
+          - name: "APP_NAME"
+            value: "sample-job-app"
+          - name: "APP_VERSION"
+            value: "v1.0.0"
+        resources:
+          limits:
+            memory: 32Mi
+            cpu: 100m
+    - name: workflow
+      dag:
+        tasks:
+        - name: sample-job-1
+          template: job
+          arguments:
+            parameters: [{name: flg, value: "0"}]
+        - name: sample-job-2
+          template: job
+          arguments:
+            parameters: [{name: flg, value: "0"}]
+        - name: sample-job-3
+          dependencies: [sample-job-1,sample-job-2]
+          template: job
+          arguments:
+            parameters: [{name: flg, value: "1"}]
+    - name: exit-handler
+      steps:
+      -  - name: recovery-job
+           template: job
+           when: "{{workflow.status}} != Succeeded"
+           arguments:
+             parameters: [{name: flg, value: "0"}]

@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowEventBinding
+metadata:
+  name: sample-job-event-consumer
+  namespace: argo
+spec:
+  event:
+    selector: metadata["x-argo-e2e"] == ["true"] && discriminator == "samplejob"
+  submit:
+    workflowTemplateRef:
+      name: sample-event-wf
