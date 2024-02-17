@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
-  name: external-http-c1
+  name: external-http
   namespace: gw-infra
 spec:
   gatewayClassName: gke-l7-global-external-managed
