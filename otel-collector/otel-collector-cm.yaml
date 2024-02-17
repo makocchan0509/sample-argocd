@@ -18,13 +18,17 @@ data:
       googlecloud:
         log:
           default_log_name: opentelemetry.io/collector-exported-log
-                  
+
+      otlp:
+        endpoint: tempo-distributor:4317
+
     service:
       pipelines:
         traces:
           receivers: [otlp]
           processors: [batch,resourcedetection]
-          exporters: [debug,googlecloud]
+          exporters: [debug,googlecloud,otlp]
 kind: ConfigMap
 metadata:
   name: otel-collector
+  namespace: observability

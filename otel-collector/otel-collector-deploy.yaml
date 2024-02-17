@@ -4,6 +4,7 @@ metadata:
   labels:
     app: otel-collector
   name: otel-collector
+  namespace: observability
 spec:
   replicas: 1
   selector:

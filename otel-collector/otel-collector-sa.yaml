@@ -2,5 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: otel-collector
+  namespace: observability
   annotations:
     iam.gke.io/gcp-service-account: otel-collector@ca-masem-test.iam.gserviceaccount.com
+
