@@ -16,6 +16,9 @@ spec:
       containers:
         - name: prometheus
           image: prom/prometheus
+          args:
+          - --web.enable-remote-write-receiver
+          - --web.enable-lifecycle
           ports:
             - containerPort: 9090
           volumeMounts:
