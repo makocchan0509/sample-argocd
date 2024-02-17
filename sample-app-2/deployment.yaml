@@ -16,7 +16,7 @@ spec:
         app: sample-go-trace-api-2
     spec:
       containers:
-      - image: asia-northeast1-docker.pkg.dev/ca-masem-test/any-container/sample-go-trace-api:v1.0.0
+      - image: asia-northeast1-docker.pkg.dev/ca-masem-test/any-container/sample-go-trace-api:v3.0.0
         name: sample-go-trace-api
         ports:
         - containerPort: 8080
@@ -27,11 +27,13 @@ spec:
           - name: APP_NAME
             value: sample-go-trace-api-2
           - name: APP_VERSION
-            value: v1
+            value: v3.0.0
           - name: APP_PORT
             value: "8080"
           - name: ENDPOINT
             value: "http://sample-go-trace-api-1.default.svc.cluster.local:8080/api/v1/sleep"
+          - name: OTEL_AGENT_ENDPOINT
+            value: otel-collector.observability.svc.cluster.local:4317
         resources: {}
 
 ---
