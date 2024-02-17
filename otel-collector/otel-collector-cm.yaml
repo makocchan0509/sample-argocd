@@ -20,7 +20,7 @@ data:
           default_log_name: opentelemetry.io/collector-exported-log
 
       otlp:
-        endpoint: tempo:4317
+        endpoint: tempo-distributor:4317
         tls:
           insecure: true
     service:
