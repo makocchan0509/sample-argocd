@@ -27,8 +27,8 @@ data:
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [batch,resourcedetection]
-          exporters: [debug,googlecloud,otlp]
+          processors: [batch]
+          exporters: [debug,otlp]
 kind: ConfigMap
 metadata:
   name: otel-collector
